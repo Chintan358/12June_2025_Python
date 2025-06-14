@@ -1,0 +1,40 @@
+Install GIT
+Create account on GITHUB
+
+Check Git in system : cmd -> git --version
+********************************************
+Create git repo in system : 
+git init
+
+SET user and email : 
+git config user.name "<username>"
+git config user.email "<email>"
+
+Chack status : 
+git status
+
+Stagging files : 
+git add <filename> : for perticular files
+git add . : for all files
+
+Commit : 
+git commit -m "<message>"
+
+*************************
+create github repo : 
+
+add this repo inti git : 
+git remote add origin <repo link>
+
+check remote : 
+git remote
+git remote  -v
+
+push on github : 
+git push origin master(branch name)
+
+
+
+
+
+
