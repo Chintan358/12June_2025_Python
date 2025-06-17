@@ -1,0 +1,26 @@
+i/o : 
+console o/p : print()
+-> "",'',"""""",end="",sep=""
+
+console i/p : input()
+-it takes data in string format
+
+
+python naming convention : 
+
+General Rules
+Allowed Characters: Identifiers (names for variables, functions, classes, etc.) can contain letters (a-z, A-Z), digits (0-9), and underscores (_).
+Start: They must start with a letter or an underscore, not a digit.
+Case Sensitivity: Python is case-sensitive, so myVar and myvar are different names.
+No Spaces: Spaces are not allowed in names. Use underscores to separate words (e.g., my_variable).
+No Special Characters: Special characters other than the underscore are not allowed.
+Reserved Words: Avoid using Python keywords (e.g., if, else, for, while, print) as names. 
+Specific Naming Conventions
+Variables: Use lowercase with words separated by underscores (e.g., user_name, total_count).
+Constants: Use uppercase with underscores separating words (e.g., MAX_VALUE, PI).
+Functions: Use lowercase with underscores (e.g., calculate_area, get_user_data).
+Classes: Use CamelCase, where each word starts with a capital letter (e.g., MyClass, UserData).
+Modules and Packages: Use lowercase names, avoid underscores and hyphens in package names.
+Methods: Use lowercase with underscores. Non-public methods should start with a single underscore.
+
+
