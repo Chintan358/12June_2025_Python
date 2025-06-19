@@ -15,6 +15,9 @@ Case Sensitivity: Python is case-sensitive, so myVar and myvar are different nam
 No Spaces: Spaces are not allowed in names. Use underscores to separate words (e.g., my_variable).
 No Special Characters: Special characters other than the underscore are not allowed.
 Reserved Words: Avoid using Python keywords (e.g., if, else, for, while, print) as names. 
+
+
+
 Specific Naming Conventions
 Variables: Use lowercase with words separated by underscores (e.g., user_name, total_count).
 Constants: Use uppercase with underscores separating words (e.g., MAX_VALUE, PI).
@@ -23,4 +26,8 @@ Classes: Use CamelCase, where each word starts with a capital letter (e.g., MyCl
 Modules and Packages: Use lowercase names, avoid underscores and hyphens in package names.
 Methods: Use lowercase with underscores. Non-public methods should start with a single underscore.
 
+
+Operators : 
+Arithmatic : 
++,-,*,/,%,**,//
 

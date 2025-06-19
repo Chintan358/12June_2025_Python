@@ -22,3 +22,20 @@
 
 # print("he\bllo")
 
+
+
+# a = int(input("enter value : "))
+# print(type(a))
+
+
+# a = "Hello python hello tops".split(" ")
+# print(a)
+
+fname = "krunal"
+lname = "jadhav"
+
+# print("my fname is {0} and lname is {0}".format(fname,lname))
+
+print(f"my fname is {fname} and lname is {lname}")
+
+

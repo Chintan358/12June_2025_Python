@@ -24,5 +24,29 @@
 # print(s)
 
 
-b = True
+# b = True
+"""Helllooooo
+fdfdf
+dfdfdfddds
+fdfddfdfddf
+"""
+
+'''dfgdfg
+gfgffdgfdg
+fgfggfgdf'''
+
+
+# a =10
+# b = "20"
+
+# print(a+int(b))
+
+# a = 10
+# s = str(a)
+# print(type(s))
+
+a = "1O"
+b = int(a)
 print(type(b))
+
+
