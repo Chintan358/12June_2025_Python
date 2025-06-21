@@ -39,7 +39,9 @@
 
 
 # memebership in , not in
-a = [10,20,60,40]
+# a = [10,20,60,40]
 
-print(10 in a)
-print(10 not in a)
+# print(10 in a)
+# print(10 not in a)
+
+

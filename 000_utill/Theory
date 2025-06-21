@@ -31,3 +31,19 @@ Operators :
 Arithmatic : 
 +,-,*,/,%,**,//
 
+
+sTATEMETNS : 
+conditional : 
+if
+if-else
+
+looping : 
+for
+while
+
+control
+break
+continue
+pass
+
+
