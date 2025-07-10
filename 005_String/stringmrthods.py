@@ -19,9 +19,9 @@
 # print("abc".center(16,'*'))
 
 
-words = "Hello python"
+# words = "Hello python"
 
-print(words[0])
-print(words[0:7])
-print(words[0:7:2])
-print(words[::-1])
+# print(words[0])
+# print(words[0:7])
+# print(words[0:7:2])
+# print(words[::-1])
