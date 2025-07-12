@@ -68,7 +68,7 @@ l = [10,20,30,40,50,60]
 # a =  [i for i in l if "p" in i]
 # a = [i for i in l if i.startswith("A")]
 
-l = [10,5,65,4,65,48,11,4,3,7,9]
+l = [10,5,65,4,48,11,4,3,7,9]
 
 # a = [i for i in l if i%2==0]
 # print(a)
@@ -99,3 +99,17 @@ l = [10,5,65,4,65,48,11,4,3,7,9]
 # print(l.count(4))
 
 # print(l.index(4))
+
+
+l = ["apple","banana","chery"]
+
+# newlist = [x for x in l]
+# print(newlist)
+
+for x in l:
+    print("apple")
+
+print("******************")
+
+newlist = ["apple" for x in l ]
+print(newlist)
