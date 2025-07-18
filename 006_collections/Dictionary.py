@@ -1,5 +1,5 @@
 
-# subjects = {"10":"Python","20":"Java","30":"Node","40":"Php","10":"React"}
+subjects = {"10" : "Python","20":"Java","30":"Node","40":"Php","10":"React"}
 
 # print(subjects)
 # print(subjects['10'])
@@ -23,7 +23,7 @@ student = {
 # student.update({"phone":"123456789","address":"surat"})
 
 
-# student.pop("name")
+student.pop("name")
 # student.popitem()
 # student.clear()
 # del student
