@@ -1,6 +1,6 @@
-import Calc
-import Calc as c
-import Math as m
+# import Calc
+# import Calc as c
+# import Math as m
 # from Math import *
 # from Calc import *
 
@@ -18,5 +18,9 @@ import Math as m
 # add(10,20)
 # square(20)
 
-c.add(10,20)
-m.add(10,20,30)
+# c.add(10,20)
+# m.add(10,20,30)
+
+from maths import Calc
+
+Calc.add(10,20)
