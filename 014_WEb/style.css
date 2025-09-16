@@ -1,0 +1,27 @@
+* {}
+
+.tf {
+    width: 200px;
+    height: 30px;
+    border: 1px solid rgb(136, 34, 34);
+    border-radius: 5px;
+    background-color: bisque;
+    color: brown;
+    box-shadow: 2px 3px;
+}
+
+h1 {
+    color: chartreuse;
+}
+
+a {
+    color: blueviolet;
+}
+
+/* a:hover {
+    color: brown;
+} */
+
+a:visited {
+    color: yellow
+}
