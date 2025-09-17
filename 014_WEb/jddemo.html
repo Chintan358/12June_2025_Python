@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+        function test() {
+
+            var a = document.getElementsByTagName('h1')[0]
+            var b = document.getElementsByTagName('h1')[1]
+
+            a.style.backgroundColor = "red"
+            a.style.color = "white"
+
+            b.style.backgroundColor = "black"
+            b.style.color = "green"
+        }
+
+        function test1() {
+
+            var a = document.getElementsByTagName('h1')[0]
+            var b = document.getElementsByTagName('h1')[1]
+
+            b.style.backgroundColor = "red"
+            b.style.color = "white"
+
+            a.style.backgroundColor = "black"
+            a.style.color = "green"
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <h1 onmouseover="test()" onmouseout="test1()">Tops Technologies</h1>
+
+    <h1 onmouseover="test()" onmouseout="test1()">Tops Technologies</h1>
+
+</body>
+
+</html>
