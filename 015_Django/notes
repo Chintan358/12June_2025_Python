@@ -1,0 +1,22 @@
+Create vertual env : 
+************************
+py -m venv <envvname>
+
+activate venev : 
+<envname>\script\activate
+
+Install django : 
+pip install django
+
+create django project : 
+py -m django startproject <projectname> .
+
+run project : 
+py manage.py runserver
+
+create app : 
+py manage.py startapp <appname>
+
+add app into steeting.py filr under installApp
+
+
