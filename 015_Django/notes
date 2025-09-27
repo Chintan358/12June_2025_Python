@@ -6,7 +6,12 @@ activate venev :
 <envname>\script\activate
 
 Install django : 
-pip install django
+pip install 
+
+
+
+
+
 
 create django project : 
 py -m django startproject <projectname> .
@@ -18,5 +23,48 @@ create app :
 py manage.py startapp <appname>
 
 add app into steeting.py filr under installApp
+***************************************************
+MODELS : 
+
+models.py :
+create model
+
+admin.py:
+register your model for admin
+
+apply db changes to django : 
+-py manage.py makemigrations
+
+apply changes to db : 
+-py manage.py migrate
+
+create admin / superuser
+-py manage.py createsuperuser
+username
+email
+password
+cpass
+y
+
+****************
+open admin panel :
+localhost:8000/admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

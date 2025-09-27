@@ -1,0 +1,25 @@
+MODEL : Student [name,email,phone]
+
+add student data : 
+Student.objects.create(name="",email="",phone="")
+
+s = Student(name="",email="",phone="")
+s.save()
+
+View Data : 
+Student.objects.all()
+
+View  By Id:
+Student.objects.get(id=1)
+Student.objects.get(pk=1)
+
+Update Data : 
+s = Student.objects.get(id=1)
+s.name=""
+s.email=""
+s.phone=""
+s.save()
+
+delete Data : 
+s = Student.objects.get(id=1)
+s.delete()
