@@ -18,19 +18,24 @@
                 <table class="table">
                     <tr>
                         <th>Id</th>
+                        <th>Profile</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Age</th>
+                        <th colspan="2">Action</th>
                     </tr>
 
                     {%for std in students%}
                     <tr>
                         <td>{{std.id}}</td>
+                        <td><img src="media/{{std.image}}" alt="{{std.image}}" height="50px" width="50px"></td>
                         <td>{{std.name}}</td>
                         <td>{{std.email}}</td>
                         <td>{{std.phone}}</td>
                         <td>{{std.age}}</td>
+                        <td><a href="{%url 'delete'%}?sid={{std.id}}" class="btn btn-danger">Delete</a></td>
+                        <td><a href="{%url 'edit'%}?sid={{std.id}}" class="btn btn-primary">Update</a></td>
                     </tr>
                     {%endfor%}
                 </table>
