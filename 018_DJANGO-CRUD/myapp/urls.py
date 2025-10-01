@@ -11,7 +11,12 @@ urlpatterns = [
     path("display",display,name="display"),
     path("delete",delete_student,name="delete"),
     path("edit",student_by_id,name="edit"),
-    path("update",update_student,name="update")
+    path("update",update_student,name="update"),
+
+
+    path("userreg",user_reg,name="userreg"),
+    path("userlogin",user_login,name="userlogin"),
+    path("userlogout",user_logout,name="userlogout")
     
 ]
 

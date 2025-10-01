@@ -23,7 +23,10 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Age</th>
-                        <th colspan="2">Action</th>
+                        <th>Action</th>
+                        <th>
+                            <a href="{%url 'userlogout'%}" class="btn btn-danger">Logout</a>
+                        </th>
                     </tr>
 
                     {%for std in students%}
