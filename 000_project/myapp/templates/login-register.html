@@ -19,23 +19,31 @@
     <div class="login-register__container container grid">
       <div class="login">
         <h3 class="section__title">Login</h3>
-        <form class="form grid">
-          <input type="email" placeholder="Your Email" class="form__input" />
-          <input type="password" placeholder="Your Password" class="form__input" />
+        <p style="color:red;">{{ err }}</p>
+        <form class="form grid" action="{% url 'login' %}" method="POST">
+          {% csrf_token %}
+          <input type="text" placeholder="Your Username" name="username" class="form__input" />
+          <input type="password" placeholder="Your Password" name="password" class="form__input" />
           <div class="form__btn">
-            <button class="btn">Login</button>
+            <button class="btn" type="submit">Login</button>
           </div>
         </form>
       </div>
       <div class="register">
         <h3 class="section__title">Create an Account</h3>
-        <form class="form grid">
-          <input type="text" placeholder="Username" class="form__input" />
-          <input type="email" placeholder="Your Email" class="form__input" />
-          <input type="password" placeholder="Your Password" class="form__input" />
-          <input type="password" placeholder="Confirm Password" class="form__input" />
+
+        <p style="color:green;">{{ msg }}</p>
+        <p style="color:red;">{{ rerr }}</p>
+
+
+        <form class="form grid" action="{% url 'register' %}" method="POST">
+          {% csrf_token %}
+          <input type="text" placeholder="Username" name="username" class="form__input" />
+          <input type="email" placeholder="Your Email" name="email" class="form__input" />
+          <input type="password" placeholder="Your Password" name="password" class="form__input" />
+          <input type="password" placeholder="Confirm Password" name="cpassword" class="form__input" />
           <div class="form__btn">
-            <button class="btn">Submit & Register</button>
+            <button class="btn" type="submit">Submit & Register</button>
           </div>
         </form>
       </div>

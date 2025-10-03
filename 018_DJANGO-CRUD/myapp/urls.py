@@ -12,6 +12,7 @@ urlpatterns = [
     path("delete",delete_student,name="delete"),
     path("edit",student_by_id,name="edit"),
     path("update",update_student,name="update"),
+    path("home",home,name="home"),
 
 
     path("userreg",user_reg,name="userreg"),

@@ -3,6 +3,7 @@ from myapp.models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 # Create your views here.
 
 @login_required(login_url="userlogin")
@@ -25,6 +26,10 @@ def reg(request):
 def display(request):
     Students =  Student.objects.all()
     return render(request,'display.html',{"students":Students})
+
+@login_required(login_url="userlogin")
+def home(request):
+    return render(request,"home.html")
 
 def delete_student(request):
     sid = request.GET['sid']
@@ -51,6 +56,9 @@ def update_student(request):
         st.email = email
         st.phone = phone
         st.age = age
+        if len(request.FILES)!=0:
+            img = request.FILES['img']
+            st.image = img
         st.save()
 
         return redirect("display")
@@ -63,10 +71,15 @@ def user_reg(request):
         lname = data.get("lname")
         password = data.get("pass")
 
+        u =  User.objects.filter(username=uname).exists()
+        if u:
+            messages.error(request,"Username already exists")
+            return render(request,"reg.html")
         user = User(first_name=fname,last_name=lname,username=uname)
         user.set_password(password)
         user.save()
-        return render(request,"reg.html",{"msg":"Registration success"})
+        messages.success(request,"Registration successfully")
+        return render(request,"reg.html")
 
 
     return render(request,'reg.html')

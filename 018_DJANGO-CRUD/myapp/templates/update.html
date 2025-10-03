@@ -17,7 +17,7 @@
                 <h2>Update Form</h2>
                 <hr>
                 <span class="text-success">{{msg}}</span>
-                <form action="{%url 'update'%}" method="post">
+                <form action="{%url 'update'%}" method="post" enctype="multipart/form-data">
                     {%csrf_token%}
                     <input type="hidden" value="{{student.id}}" name="sid">
                     <div class="form-group">
@@ -44,6 +44,13 @@
                         <label for="age">Age</label>
                         <input type="text" name="age" id="age" placeholder="Enter age" class="form-control"
                             value="{{student.age}}">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="photo">Photo</label>
+                        <input type="file" name="img" id="img" class="form-control">
+                        <br>
+                        <img src="/media/{{student.image}}" width="100" alt="">
                     </div>
                     <br>
                     <input type="submit" class="btn btn-success">

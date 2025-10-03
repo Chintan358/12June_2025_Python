@@ -14,4 +14,7 @@ urlpatterns = [
     path("shop",shop,name="shop"),
     path("wishlist",wishlist,name="wishlist"),
 
+    path("register",register,name="register"),
+    path("login",user_login,name="login"),
+
 ]
