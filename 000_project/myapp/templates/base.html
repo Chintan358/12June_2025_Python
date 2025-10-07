@@ -46,12 +46,19 @@
                     <li class="nav__item">
                         <a href="{%url 'accounts'%}" class="nav__link">My Account</a>
                     </li>
+
+                    {%if user.is_authenticated%}
                     <li class="nav__item">
-                        <a href="{%url 'compare'%}" class="nav__link">Compare</a>
+                        <a href="{%url 'user-logout'%}" class="nav__link">Logout</a>
                     </li>
+                    <li class="nav__item">
+                        <a href="{%url 'user-logout'%}" class="nav__link">Welcome, {{user}}</a>
+                    </li>
+                    {%else%}
                     <li class="nav__item">
                         <a href="{%url 'login-register'%}" class="nav__link">Login</a>
                     </li>
+                    {%endif%}
                 </ul>
                 <div class="header__search">
                     <input type="text" placeholder="Search For Items..." class="form__input" />
@@ -145,6 +152,7 @@
         </div>
         <div class="footer__bottom">
             <p class="copyright">&copy; 2024 Evara. All right reserved</p>
+            <p>Last login : {{user.last_login}}</p>
             <span class="designer">Designer by Crypticalcoder</span>
         </div>
     </footer>
