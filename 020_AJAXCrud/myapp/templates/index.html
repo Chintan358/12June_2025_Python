@@ -16,15 +16,30 @@
 
         $(document).ready(function () {
             load()
+            loadDept()
         })
+
+        function loadDept() {
+            $.get('deptdisplay', {}, function (rt) {
+                options = `<option value="">Select Department</option>`
+                rt.data.map(ele => {
+                    options += `<option value="${ele.id}">${ele.name}</option>`
+                })
+
+                $("#dept").html(options)
+            })
+        }
 
         function load() {
 
             $.get('display', {}, function (rt) {
+                console.log(rt.data);
+
                 rows = ""
                 rt.data.map(ele => {
                     rows += `<tr>
                             <td>${ele.id}</td>
+                            <td>${ele.dept__name}</td>
                             <td>${ele.name}</td>
                             <td>${ele.email}</td>
                             <td>${ele.phone}</td>
@@ -41,6 +56,7 @@
 
             var csrfmiddlewaretoken = document.querySelector("input[name='csrfmiddlewaretoken']").value
 
+            var dept = $("#dept").val()
             var name = $("#name").val()
             var email = $("#email").val()
             var phone = $("#phone").val()
@@ -49,13 +65,15 @@
 
 
 
-            $.post('register', { csrfmiddlewaretoken, name, email, phone, age }, function (rt) {
+            $.post('register', { csrfmiddlewaretoken, dept, name, email, phone, age }, function (rt) {
                 alert(rt)
                 load()
+                $("#dept").val("")
                 $("#name").val("")
                 $("#email").val("")
                 $("#phone").val("")
                 $("#age").val("")
+
             })
 
 
@@ -82,6 +100,11 @@
                 <h2 align="center">Registration Form</h2>
                 <hr>
                 {%csrf_token%}
+                <label for="dept">Department</label>
+                <select name="dept" id="dept" class="form-control">
+                    <option value="">Select Department</option>
+
+                </select>
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter name" class="form-control">
 
@@ -106,6 +129,7 @@
                     <thead>
                         <tr>
                             <th>Id</th>
+                            <th>Department</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
