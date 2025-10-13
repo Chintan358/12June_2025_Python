@@ -44,10 +44,34 @@
                             <td>${ele.email}</td>
                             <td>${ele.phone}</td>
                             <td>${ele.age}</td>
+                            <td><button class='btn btn-primary' onclick='databyid(${ele.id})'>Update</button>
+                                
+                                <button class='btn btn-danger mt-1' onclick='deleteStudent(${ele.id})'>Delete</button></td>
+                            
                         </tr>`
                 })
 
                 $("#tdata").html(rows)
+            })
+        }
+
+        function deleteStudent(id) {
+            $.get('delete', { id }, function (rt) {
+                alert(rt)
+                load()
+            })
+        }
+
+        function databyid(id) {
+            $.get('databyid', { id }, function (rt) {
+
+                $("#id").val(rt.std[0].id)
+                $("#dept").val(rt.std[0].dept_id)
+                $("#name").val(rt.std[0].name)
+                $("#email").val(rt.std[0].email)
+                $("#phone").val(rt.std[0].phone)
+                $("#age").val(rt.std[0].age)
+
             })
         }
 
@@ -56,6 +80,7 @@
 
             var csrfmiddlewaretoken = document.querySelector("input[name='csrfmiddlewaretoken']").value
 
+            var id = $("#id").val()
             var dept = $("#dept").val()
             var name = $("#name").val()
             var email = $("#email").val()
@@ -65,9 +90,10 @@
 
 
 
-            $.post('register', { csrfmiddlewaretoken, dept, name, email, phone, age }, function (rt) {
+            $.post('register', { csrfmiddlewaretoken, id, dept, name, email, phone, age }, function (rt) {
                 alert(rt)
                 load()
+                $("#id").val("")
                 $("#dept").val("")
                 $("#name").val("")
                 $("#email").val("")
@@ -94,12 +120,13 @@
 
 <body>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row mt-5">
             <div class="col-5 card p-5">
                 <h2 align="center">Registration Form</h2>
                 <hr>
                 {%csrf_token%}
+                <input type="hidden" id="id">
                 <label for="dept">Department</label>
                 <select name="dept" id="dept" class="form-control">
                     <option value="">Select Department</option>
@@ -134,6 +161,7 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Age</th>
+                            <th colspan="2">Action</th>
                         </tr>
                     </thead>
                     <tbody id="tdata">
