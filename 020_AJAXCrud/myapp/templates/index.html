@@ -55,6 +55,35 @@
             })
         }
 
+
+
+        function search(value) {
+
+            $.get('search', { value }, function (rt) {
+
+                rows = ""
+                rt.data.map(ele => {
+                    rows += `<tr>
+                            <td>${ele.id}</td>
+                            <td>${ele.dept__name}</td>
+                            <td>${ele.name}</td>
+                            <td>${ele.email}</td>
+                            <td>${ele.phone}</td>
+                            <td>${ele.age}</td>
+                            <td><button class='btn btn-primary' onclick='databyid(${ele.id})'>Update</button>
+                                
+                                <button class='btn btn-danger mt-1' onclick='deleteStudent(${ele.id})'>Delete</button></td>
+                            
+                        </tr>`
+                })
+
+                $("#tdata").html(rows)
+            })
+        }
+
+
+
+
         function deleteStudent(id) {
             $.get('delete', { id }, function (rt) {
                 alert(rt)
@@ -81,13 +110,13 @@
             var csrfmiddlewaretoken = document.querySelector("input[name='csrfmiddlewaretoken']").value
 
             var id = $("#id").val()
-            var dept = $("#dept").val()
             var name = $("#name").val()
+            var dept = $("#dept").val()
             var email = $("#email").val()
             var phone = $("#phone").val()
             var age = $("#age").val()
 
-
+            alert(name)
 
 
             $.post('register', { csrfmiddlewaretoken, id, dept, name, email, phone, age }, function (rt) {
@@ -105,6 +134,24 @@
 
         }
 
+        function checkemail(email) {
+            $.get('checkmail', { email }, function (rt) {
+                if (rt == 'True') {
+                    var email = $("#email")
+                    email.css('color', 'red')
+                    email.css('border', '1px solid red')
+                    $("#emailErr").html("Email already exists !!!")
+                    $("#btn").prop("disabled", true);
+                }
+                else {
+                    $("#btn").prop("disabled", false);
+                    var email = $("#email")
+                    email.css('color', '')
+                    email.css('border', '')
+                    $("#emailErr").html("")
+                }
+            })
+        }
 
     </script>
 
@@ -136,7 +183,9 @@
                 <input type="text" id="name" name="name" placeholder="Enter name" class="form-control">
 
                 <label for="email">email</label>
-                <input type="text" id="email" name="email" placeholder="Entae email" class="form-control">
+                <input type="text" id="email" name="email" placeholder="Entae email" class="form-control"
+                    onkeyup="checkemail(value)">
+                <span id="emailErr" class="text-danger"></span>
 
                 <label for="phone">Phone</label>
                 <input type="text" name="phone" id="phone" placeholder="Enter phone" class="form-control">
@@ -144,7 +193,7 @@
                 <label for="age">Age</label>
                 <input type="text" name="age" id="age" placeholder="Enter age" class="form-control">
                 <br>
-                <input type="submit" class="btn btn-success" onclick="register()">
+                <input type="submit" class="btn btn-success" onclick="register()" id="btn">
 
             </div>
 
@@ -152,6 +201,10 @@
             <div class="col-6 card p-5">
                 <h2 align="center">Student Details</h2>
                 <hr>
+                <input type="text" id="search" name="search" placeholder="search here...." class="form-control"
+                    onkeyup="search(value)">
+                <hr>
+
                 <table class="table">
                     <thead>
                         <tr>

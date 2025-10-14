@@ -1,6 +1,7 @@
 from django.shortcuts import render,HttpResponse
 from myapp.models import *
 from django.http import JsonResponse
+from django.db.models import Q
 # Create your views here.
 def index(request):
     return render(request, "index.html")
@@ -62,6 +63,24 @@ def databyid(request):
     student = Student.objects.filter(id = request.GET['id'])
     return JsonResponse({"std":list(student.values())})
      
+def search(request):
+    value = request.GET['value']
+    searchedStd = Student.objects.filter(Q(name__startswith=value) | Q(email__startswith=value) | Q(age__startswith=value) )
+    data = list(
+            searchedStd.values(
+                'id',
+                'name',
+                'email',
+                'phone',
+                'age',
+                'dept__id',
+                'dept__name', 
+            )
+        )
+        
+    return JsonResponse({"data": data})
 
-
-
+def checkmail(request):
+    email = request.GET['email']
+    exists = Student.objects.filter(email=email).exists()
+    return HttpResponse(exists)
