@@ -10,4 +10,5 @@ class ProductModel(admin.ModelAdmin):
 
 admin.site.register(Category,CategoryModel)
 admin.site.register(Product,ProductModel)
+admin.site.register(Cart)
 

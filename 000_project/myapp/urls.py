@@ -14,10 +14,14 @@ urlpatterns = [
     path("login-register",login_register,name="login-register"),
     path("shop",shop,name="shop"),
     path("wishlist",wishlist,name="wishlist"),
+    path("allcategories",allcategories,name="allcategories"),
+    path("allproducts",allproducts,name="allproducts"),
 
     path("register",register,name="register"),
     path("login",user_login,name="login"),
-    path("user-logout",user_logout,name="user-logout")
+    path("user-logout",user_logout,name="user-logout"),
+
+    path('addtocart',add_to_cart,name="addtocart")
 
 ]
 

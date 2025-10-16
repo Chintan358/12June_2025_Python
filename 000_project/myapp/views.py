@@ -1,23 +1,31 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth.models import User
 from myapp.models import *
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 # Create your views here.
 
 def index(request):
+  
+   
+    return render(request,"index.html")
+    
+
+def allcategories(request):
     categories = Category.objects.all()
-    products = Product.objects.all()
-    try :
-        cid =  int(request.GET['cid']  )
-       
-        if cid!=0:
-            products = Product.objects.filter(category_id=cid)
-        else:
-            products = Product.objects.all()
-        return render(request,"index.html",{"categories":categories,"products":products})
-    except Exception as e:
-         return render(request,"index.html",{"categories":categories,"products":products})
+    return JsonResponse({"data":list(categories.values())})
+
+def allproducts(request):
+    cid = request.GET['catid']
+   
+    if int(cid)==0:
+         print(cid)
+         products = Product.objects.all()
+         return JsonResponse({"data":list(products.values())})
+    else : 
+        products=Product.objects.filter(category_id=cid)
+        return JsonResponse({"data":list(products.values())})
 
 @login_required(login_url="login-register")
 def accounts(request):
@@ -80,3 +88,15 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect("index")
+
+
+def add_to_cart(request):
+
+    if not request.user.is_anonymous  :
+        pid = request.GET['pid']
+        product = Product.objects.get(id=pid)
+        
+        Cart.objects.create(product =product,user=request.user,qty=1)
+        return HttpResponse("Product added in to cart !!!")
+    else :
+        return HttpResponse(request.user)

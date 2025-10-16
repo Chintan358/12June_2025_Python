@@ -25,17 +25,14 @@
   <section class="categories container section">
     <h3 class="section__title"><span>Popular</span> Categories</h3>
     <div class="categories__container swiper">
-      <div class="swiper-wrapper">
-        <a href="{%url 'index'%}?cid=0" class="category__item swiper-slide">
-          <img src="" alt="" class="category__img" />
-          <h3 class="category__title">ALL</h3>
-        </a>
-        {%for category in categories%}
-        <a href="{%url 'index'%}?cid={{category.id}}" class="category__item swiper-slide">
-          <img src="media/{{category.image}}" alt="{{category.image}}" class="category__img" />
-          <h3 class="category__title">{{category.name}}</h3>
-        </a>
-        {%endfor%}
+      <div class="swiper-wrapper" id="catdata">
+
+
+        <!-- <a href="{%url 'index'%}?cid={{category.id}}" class="category__item swiper-slide"> -->
+        <!-- <img src="media/abc" alt="abc" class="category__img" />
+        <h3 class="category__title">abc</h3>
+        </a> -->
+
       </div>
 
       <div class="swiper-button-prev">
@@ -57,49 +54,9 @@
 
     <div class="tab__items">
       <div class="tab__item active-tab" content id="featured">
-        <div class="products__container grid">
-          {%for product in products%}
-          <div class="product__item">
-            <div class="product__banner">
-              <a href="details.html" class="product__images">
-                <img src="media/{{product.image}}" alt="{{product.image}}" class="product__img default" />
-                <img src="media/{{product.image}}" alt="{{product.image}}" class="product__img hover" />
-              </a>
-              <div class="product__actions">
-                <a href="#" class="action__btn" aria-label="Quick View">
-                  <i class="fi fi-rs-eye"></i>
-                </a>
-                <a href="#" class="action__btn" aria-label="Add to Wishlist">
-                  <i class="fi fi-rs-heart"></i>
-                </a>
-                <a href="#" class="action__btn" aria-label="Compare">
-                  <i class="fi fi-rs-shuffle"></i>
-                </a>
-              </div>
+        <div class="products__container grid" id="prodata">
 
-            </div>
-            <div class="product__content">
-              <span class="product__category">{{product.category}}</span>
-              <a href="details.html">
-                <h3 class="product__title">{{product.name}}</h3>
-              </a>
-              <div class="product__rating">
-                <i class="fi fi-rs-star"></i>
-                <i class="fi fi-rs-star"></i>
-                <i class="fi fi-rs-star"></i>
-                <i class="fi fi-rs-star"></i>
-                <i class="fi fi-rs-star"></i>
-              </div>
-              <div class="product__price flex">
-                <span class="new__price">${{product.price}}</span>
 
-              </div>
-              <a href="#" class="action__btn cart__btn" aria-label="Add To Cart">
-                <i class="fi fi-rs-shopping-bag-add"></i>
-              </a>
-            </div>
-          </div>
-          {%endfor%}
         </div>
       </div>
       <div class="tab__item" content id="popular">
@@ -1338,4 +1295,102 @@
     </div>
   </section>
 </main>
+
+<script>
+
+  $(document).ready(function () {
+    loadCategories()
+    loadproducts(0)
+  })
+
+  function addtocart(pid) {
+
+    $.get('addtocart', { pid }, function (rt) {
+      if (rt == 'AnonymousUser') {
+        location.href = "login-register"
+      }
+      else {
+        alert(rt)
+      }
+    })
+  }
+
+  function loadCategories() {
+
+    $.get("allcategories", {}, function (rt) {
+
+      var row = ""
+      rt.data.map(ele => {
+        row += `<a onclick="loadproducts(${ele.id})" class="category__item swiper-slide"> 
+        <img src="media/${ele.image}" alt="${ele.image}" class="category__img" />
+        <h3 class="category__title">${ele.name}</h3>
+        </a>`
+      })
+
+      $("#catdata").html(row)
+    })
+  }
+
+
+  function loadproducts(cid) {
+
+    var catid;
+    if (cid == undefined) {
+      catid = 0
+    }
+    else {
+      catid = cid
+    }
+    $.get('allproducts', { catid }, function (rt) {
+
+      var row = ""
+      rt.data.map(product => {
+        row += `<div class="product__item">
+            <div class="product__banner">
+              <a href="details.html" class="product__images">
+                <img src="media/${product.image}" alt="${product.image}" class="product__img default" />
+                <img src="media/${product.image}" alt="${product.image}" class="product__img hover" />
+              </a>
+              <div class="product__actions">
+                <a href="#" class="action__btn" aria-label="Quick View">
+                  <i class="fi fi-rs-eye"></i>
+                </a>
+                <a href="#" class="action__btn" aria-label="Add to Wishlist">
+                  <i class="fi fi-rs-heart"></i>
+                </a>
+                <a href="#" class="action__btn" aria-label="Compare">
+                  <i class="fi fi-rs-shuffle"></i>
+                </a>
+              </div>
+
+            </div>
+            <div class="product__content">
+              <span class="product__category">${product.category}</span>
+              <a href="details.html">
+                <h3 class="product__title">${product.name}</h3>
+              </a>
+              <div class="product__rating">
+                <i class="fi fi-rs-star"></i>
+                <i class="fi fi-rs-star"></i>
+                <i class="fi fi-rs-star"></i>
+                <i class="fi fi-rs-star"></i>
+                <i class="fi fi-rs-star"></i>
+              </div>
+              <div class="product__price flex">
+                <span class="new__price">$ ${product.price}</span>
+
+              </div>
+              <a onclick="addtocart('${product.id}')" class="action__btn cart__btn" aria-label="Add To Cart">
+                <i class="fi fi-rs-shopping-bag-add"></i>
+              </a>
+            </div>
+          </div>
+        `
+      })
+      $("#prodata").html(row)
+    })
+  }
+
+</script>
+
 {%endblock%}
