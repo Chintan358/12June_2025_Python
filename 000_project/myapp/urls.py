@@ -21,7 +21,9 @@ urlpatterns = [
     path("login",user_login,name="login"),
     path("user-logout",user_logout,name="user-logout"),
 
-    path('addtocart',add_to_cart,name="addtocart")
+    path('addtocart',add_to_cart,name="addtocart"),
+    path('deletecart',deletecart,name='deletecart'),
+    path('changeqty',changeqty,name='changeqty')
 
 ]
 

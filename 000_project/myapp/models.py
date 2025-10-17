@@ -24,3 +24,6 @@ class Cart(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     qty = models.IntegerField()
 
+    def subtotal(self):
+        return self.product.price*self.qty
+

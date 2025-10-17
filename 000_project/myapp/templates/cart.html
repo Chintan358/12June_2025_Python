@@ -32,61 +32,28 @@
           </tr>
         </thead>
         <tbody>
+
+          {%for cart in cdata%}
+
           <tr>
             <td>
-              <img src="./static/assets//img/product-1-2.jpg" alt="" class="table__img" />
+              <img src="media/{{cart.product.image}}" alt="" class="table__img" />
             </td>
             <td>
               <h3 class="table__title">
-                J.Crew Mercantile Women's Short-Sleeve
+                {{cart.product.name}}
               </h3>
-              <p class="table__description">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
+
             </td>
             <td>
-              <span class="table__price">$110</span>
+              <span class="table__price">${{cart.product.price}}</span>
             </td>
-            <td><input type="number" value="3" class="quantity" /></td>
-            <td><span class="subtotal">$220</span></td>
-            <td><i class="fi fi-rs-trash table__trash"></i></td>
+            <td><input type="number" value="{{cart.qty}}" class="quantity" onchange="changeqty(value,'{{cart.id}}')" />
+            </td>
+            <td><span class="subtotal">${{cart.subtotal}}</span></td>
+            <td><i class="fi fi-rs-trash table__trash" onclick="deletecart('{{cart.id}}')"></i></td>
           </tr>
-          <tr>
-            <td>
-              <img src="./static/assets//img/product-7-1.jpg" alt="" class="table__img" />
-            </td>
-            <td>
-              <h3 class="table__title">Amazon Essentials Women's Tank</h3>
-              <p class="table__description">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-            </td>
-            <td>
-              <span class="table__price">$110</span>
-            </td>
-            <td><input type="number" value="3" class="quantity" /></td>
-            <td><span class="subtotal">$220</span></td>
-            <td><i class="fi fi-rs-trash table__trash"></i></td>
-          </tr>
-          <tr>
-            <td>
-              <img src="./static/assets//img/product-2-1.jpg" alt="" class="table__img" />
-            </td>
-            <td>
-              <h3 class="table__title">
-                Amazon Brand - Daily Ritual Women's Jersey
-              </h3>
-              <p class="table__description">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-            </td>
-            <td>
-              <span class="table__price">$110</span>
-            </td>
-            <td><input type="number" value="3" class="quantity" /></td>
-            <td><span class="subtotal">$220</span></td>
-            <td><i class="fi fi-rs-trash table__trash"></i></td>
-          </tr>
+          {%endfor%}
         </tbody>
       </table>
     </div>
@@ -176,5 +143,23 @@
     </div>
   </section>
 </main>
+
+<script>
+
+  function deletecart(cid) {
+
+    $.get('deletecart', { cid }, function (rt) {
+      location.reload()
+    })
+  }
+
+  function changeqty(qty, cartid) {
+
+    $.get('changeqty', { cartid, qty }, function (rt) {
+      location.reload()
+    })
+  }
+
+</script>
 
 {%endblock%}

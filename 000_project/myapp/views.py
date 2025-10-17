@@ -33,7 +33,8 @@ def accounts(request):
 
 @login_required(login_url="login-register")
 def cart(request):
-    return render(request,"cart.html")
+    cartdata = Cart.objects.filter(user=request.user)
+    return render(request,"cart.html",{"cdata":cartdata})
 
 @login_required(login_url="login-register")
 def checkout(request):
@@ -96,7 +97,33 @@ def add_to_cart(request):
         pid = request.GET['pid']
         product = Product.objects.get(id=pid)
         
-        Cart.objects.create(product =product,user=request.user,qty=1)
-        return HttpResponse("Product added in to cart !!!")
+        cdata =  Cart.objects.filter(product=product,user=request.user)
+        if len(cdata)>0:
+            cdata[0].qty = cdata[0].qty+1
+            cdata[0].save()
+            return HttpResponse("Product added in to cart !!!")
+        else:
+            Cart.objects.create(product =product,user=request.user,qty=1)
+            return HttpResponse("Product added in to cart !!!")
     else :
         return HttpResponse(request.user)
+    
+
+def deletecart(request):
+    cid = request.GET['cid']
+    cart = Cart.objects.get(pk=cid)
+    cart.delete()
+    return HttpResponse("cart deleted")
+
+
+def changeqty(request):
+    cartid = request.GET['cartid']
+    qty  =request.GET['qty']
+
+    cart = Cart.objects.get(pk=cartid)
+    if int(qty)<=0:
+        cart.delete()
+    else:
+        cart.qty= qty
+        cart.save()
+    return HttpResponse("cart updated...")
