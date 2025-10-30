@@ -12,6 +12,56 @@
 <body>
     <input type="text" name="amt" id="amt">
     <button id="rzp-button1">Pay with Razorpay</button>
+
+    <hr>
+    <section id="sms-section"
+        style="max-width:720px;margin:24px auto;padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.08);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;">
+        <h2 style="margin:0 0 10px;font-size:1.25rem;">Send SMS</h2>
+
+        <form action="{%url 'sms'%}" id="sms-form" novalidate>
+            <!-- Phone input -->
+            <label for="phone" style="display:block;margin-bottom:6px;font-weight:600;">Phone number</label>
+            <input id="phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="+919988776655"
+                aria-describedby="phoneHelp" required
+                style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid #d6d6d6;font-size:1rem;box-sizing:border-box;" />
+            <div id="phoneHelp" style="margin-top:6px;color:#666;font-size:.875rem;">Use international format:
+                <code>+{country}{number}</code> (e.g. <code>+919988776655</code>).
+            </div>
+
+            <!-- Message textarea -->
+            <div style="margin-top:14px;">
+                <label for="message" style="display:block;margin-bottom:6px;font-weight:600;">Message</label>
+                <textarea id="message" name="message" rows="4" maxlength="160"
+                    placeholder="Enter your SMS message (max 160 characters)" aria-describedby="msgHelp" required
+                    style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid #d6d6d6;font-size:1rem;box-sizing:border-box;resize:vertical;"></textarea>
+                <div id="msgHelp"
+                    style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;color:#666;font-size:.875rem;">
+                    <span>Standard SMS length: 160 chars</span>
+                    <span id="charCount">160</span>
+                </div>
+            </div>
+
+            <!-- Action row -->
+            <div style="display:flex;gap:10px;align-items:center;margin-top:16px;">
+                <button id="sendBtn" type="submit"
+                    style="background:#0f62fe;color:white;padding:10px 16px;border-radius:10px;border:0;font-weight:600;cursor:pointer;opacity:.6;">
+                    Send
+                </button>
+
+                <button id="clearBtn" type="button"
+                    style="background:transparent;border:1px solid #d6d6d6;padding:8px 12px;border-radius:10px;cursor:pointer;">
+                    Clear
+                </button>
+
+                <div id="status" role="status" aria-live="polite" style="margin-left:auto;color:#333;font-size:.95rem;">
+                </div>
+            </div>
+        </form>
+    </section>
+    <hr>
+
+
+
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
 
