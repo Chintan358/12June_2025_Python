@@ -3,6 +3,8 @@ import razorpay
 from django.http import JsonResponse
 # Create your views here.
 import requests
+from django.core.mail import send_mail
+from django.conf import settings
 
 def index(request):
     return render(request,'index.html')
@@ -36,3 +38,19 @@ def sms(request):
 
     print(response.text)
     return HttpResponse(response.text)
+
+
+def send_email(request):
+
+    emailto = request.GET['email-to']
+    subject = request.GET['subject']
+    message = request.GET['message']
+    context = {}
+    try:
+        send_mail(subject, message, settings.EMAIL_HOST_USER, [emailto])
+        context['result'] = 'Email sent successfully'
+    except Exception as e:
+        context['result'] = f'Error sending email: {e}'
+   
+
+    return render(request,'index.html',context)
