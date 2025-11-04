@@ -4,6 +4,7 @@ from myapp.models import *
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+import razorpay
 # Create your views here.
 
 def index(request):
@@ -29,12 +30,20 @@ def allproducts(request):
 
 @login_required(login_url="login-register")
 def accounts(request):
-    return render(request,"accounts.html")
+    addressdata = Address.objects.filter(user=request.user)
+ 
+    return render(request,"accounts.html",{"address":addressdata})
 
 @login_required(login_url="login-register")
 def cart(request):
     cartdata = Cart.objects.filter(user=request.user)
-    return render(request,"cart.html",{"cdata":cartdata})
+    addressdata = Address.objects.filter(user=request.user)
+ 
+    sum = 0
+    for i in cartdata:
+       sum+=i.subtotal()
+
+    return render(request,"cart.html",{"cdata":cartdata,"total":int(sum),"address":addressdata})
 
 @login_required(login_url="login-register")
 def checkout(request):
@@ -127,3 +136,20 @@ def changeqty(request):
         cart.qty= qty
         cart.save()
     return HttpResponse("cart updated...")
+
+
+def payment(request):
+
+    amt = int(request.GET['amt'])
+    client = razorpay.Client(auth=("rzp_test_R8LF6p6eS7swQn", "WsLBNmXfF7C4e9T4vWgZaLeN"))
+     
+    data = { "amount": amt*100, "currency": "INR", "receipt": "order_rcptid_1" }
+    payment = client.order.create(data=data) # Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    print(payment)
+    return JsonResponse(payment)
+
+
+def addaddress(request):
+    adr = request.GET['adr']
+    Address.objects.create(address=adr,user=request.user)
+    return HttpResponse("address added")

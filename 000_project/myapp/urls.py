@@ -23,7 +23,10 @@ urlpatterns = [
 
     path('addtocart',add_to_cart,name="addtocart"),
     path('deletecart',deletecart,name='deletecart'),
-    path('changeqty',changeqty,name='changeqty')
+    path('changeqty',changeqty,name='changeqty'),
+
+    path('payment',payment,name='payment'),
+    path("addaddress",addaddress,name="addaddress")
 
 ]
 

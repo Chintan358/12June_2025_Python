@@ -26,4 +26,29 @@ class Cart(models.Model):
 
     def subtotal(self):
         return self.product.price*self.qty
+    
+
+class Address(models.Model):
+    address = models.CharField(max_length=200)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+
+
+class UserOrder(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    address = models.ForeignKey(Address,on_delete=models.CASCADE)
+    total = models.IntegerField()
+    paymentid = models.CharField(max_length=20)
+    receiptid = models.CharField(max_length=20)
+    orderid = models.CharField(max_length=30)
+    date = models.DateField()
+
+class OrderDetails(models.Model):
+    order = models.ForeignKey(UserOrder,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    qty = models.IntegerField()
+    price = models.FloatField()
+
+    
+
+
 

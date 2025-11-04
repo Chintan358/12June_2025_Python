@@ -100,14 +100,22 @@
         <div class="tab__content" content id="address">
           <h3 class="tab__header">Shipping Address</h3>
           <div class="tab__body">
+            {%for i in address%}
             <address class="address">
-              3522 Interstate <br />
-              75 Business Spur, <br />
-              Sault Ste. <br />
-              Marie, Mi 49783
+              {{i.address}}
             </address>
-            <p class="city">New York</p>
             <a href="#" class="edit">Edit</a>
+            <br>
+            <hr>
+            <br>
+            {%endfor%}
+
+
+            <div class="form__btn">
+              <input type="text" class="form__input" id="adr">
+              <button class="btn btn--md" onclick="addaddress()">Add</button>
+            </div>
+
           </div>
         </div>
         <div class="tab__content" content id="change-password">
@@ -144,5 +152,19 @@
     </div>
   </section>
 </main>
+
+<script>
+
+  const addaddress = () => {
+
+    var adr = $("#adr").val()
+    $.get("addaddress", { adr }, function (rt) {
+      location.reload()
+    })
+
+
+  }
+
+</script>
 
 {%endblock%}

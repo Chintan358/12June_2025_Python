@@ -74,19 +74,25 @@
     <div class="cart__group grid">
       <div>
         <div class="cart__shippinp">
-          <h3 class="section__title">Calculate Shipping</h3>
-          <form action="" class="form grid">
-            <input type="text" class="form__input" placeholder="State / Country" />
-            <div class="form__group grid">
-              <input type="text" class="form__input" placeholder="City" />
-              <input type="text" class="form__input" placeholder="PostCode" />
-            </div>
-            <div class="form__btn">
-              <button class="btn flex btn--sm">
-                <i class="fi-rs-shuffle"></i> Update
-              </button>
-            </div>
-          </form>
+          <h3 class="section__title">Address</h3>
+          <h3 class="tab__header">Shipping Address</h3>
+          <div class="tab__body">
+            {%for i in address%}
+            <address class="address">
+              <input type="radio" name="adr" id="adr" value="{{i.id}}">
+              {{i.address}}
+            </address>
+
+            <br>
+            <hr>
+            <br>
+            {%endfor%}
+
+
+
+
+          </div>
+
         </div>
         <div class="cart__coupon">
           <h3 class="section__title">Apply Coupon</h3>
@@ -108,19 +114,19 @@
         <table class="cart__total-table">
           <tr>
             <td><span class="cart__total-title">Cart Subtotal</span></td>
-            <td><span class="cart__total-price">$240.00</span></td>
+            <td><span class="cart__total-price">${{total}}</span></td>
           </tr>
           <tr>
             <td><span class="cart__total-title">Shipping</span></td>
-            <td><span class="cart__total-price">$10.00</span></td>
+            <td><span class="cart__total-price">$00.00</span></td>
           </tr>
           <tr>
             <td><span class="cart__total-title">Total</span></td>
-            <td><span class="cart__total-price">$250.00</span></td>
+            <td><span class="cart__total-price">$<span id="amt">{{total}}</span></span></td>
           </tr>
         </table>
-        <a href="checkout.html" class="btn flex btn--md">
-          <i class="fi fi-rs-box-alt"></i> Proceed To Checkout
+        <a id="pay" class="btn flex btn--md">
+          <i class="fi fi-rs-box-alt"></i> Proceed To Pay
         </a>
       </div>
     </div>
@@ -160,6 +166,63 @@
     })
   }
 
+</script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+  document.getElementById('pay').onclick = function (e) {
+
+    e.preventDefault();
+    var amt = $("#amt").html()
+    alert(amt)
+
+    $.get('payment', { amt }, function (rt) {
+
+      var options = {
+        "key": "rzp_test_R8LF6p6eS7swQn", // Enter the Key ID generated from the Dashboard
+        "amount": rt.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Tops tech Corp",
+        "description": "Test Transaction",
+        "image": "https://example.com/your_logo",
+        "order_id": rt.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response) {
+          alert(rt.receipt)
+          alert(response.razorpay_payment_id);
+          alert(response.razorpay_order_id);
+          alert(response.razorpay_signature)
+        },
+        "prefill": {
+          "name": "Gaurav Kumar",
+          "email": "gaurav.kumar@example.com",
+          "contact": "9000090000"
+        },
+        "notes": {
+          "address": "Razorpay Corporate Office"
+        },
+        "theme": {
+          "color": "#3399cc"
+        }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.on('payment.failed', function (response) {
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+      });
+
+      rzp1.open();
+    })
+
+
+
+
+  }
 </script>
 
 {%endblock%}
