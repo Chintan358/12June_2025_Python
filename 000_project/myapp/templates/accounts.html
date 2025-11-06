@@ -50,40 +50,42 @@
         <div class="tab__content" content id="orders">
           <h3 class="tab__header">Your Orders</h3>
           <div class="tab__body">
+            {%for order in orders%}
             <table class="placed__order-table">
               <thead>
                 <tr>
-                  <th>Orders</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Totals</th>
-                  <th>Actions</th>
+                  <th>Order Id : {{order.orderid}}</th>
+                  <th>Date : {{order.date}}</th>
+                  <th rowspan="2">Total : {{order.total}}</th>
+                  <th rowspan="2">Address : {{order.address.address}}</th>
+                </tr>
+                <tr>
+                  <th>Pay Id : {{order.paymentid}}</th>
+                  <th>Receipt Id : {{order.receiptid}}</th>
+                </tr>
+                <tr>
+                  <th>ID</th>
+                  <th>Product</th>
+                  <th>Qty</th>
+                  <th>price</th>
+                  <th>Subtotal</th>
                 </tr>
               </thead>
               <tbody>
+                {%for i in order.userorder.all%}
                 <tr>
-                  <td>#1357</td>
-                  <td>March 19, 2022</td>
-                  <td>Processing</td>
-                  <td>$125.00</td>
-                  <td><a href="#" class="view__order">View</a></td>
+                  <td>{{i.id}}</td>
+                  <td>{{i.product.name}}</td>
+                  <td>{{i.qty}}</td>
+                  <td>${{i.price}}</td>
+                  <td>${{i.subtotal}}</td>
                 </tr>
-                <tr>
-                  <td>#2468</td>
-                  <td>June 29, 2022</td>
-                  <td>Completed</td>
-                  <td>$364.00</td>
-                  <td><a href="#" class="view__order">View</a></td>
-                </tr>
-                <tr>
-                  <td>#2366</td>
-                  <td>August 02, 2022</td>
-                  <td>Completed</td>
-                  <td>$280.00</td>
-                  <td><a href="#" class="view__order">View</a></td>
-                </tr>
+                {%endfor%}
               </tbody>
             </table>
+            <br>
+            <br>
+            {%endfor%}
           </div>
         </div>
         <div class="tab__content" content id="update-profile">

@@ -5,6 +5,9 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import razorpay
+from datetime import datetime
+from django.core.mail import send_mail
+from django.conf import settings
 # Create your views here.
 
 def index(request):
@@ -31,8 +34,8 @@ def allproducts(request):
 @login_required(login_url="login-register")
 def accounts(request):
     addressdata = Address.objects.filter(user=request.user)
- 
-    return render(request,"accounts.html",{"address":addressdata})
+    orders = UserOrder.objects.filter(user = request.user)
+    return render(request,"accounts.html",{"address":addressdata,"orders":orders})
 
 @login_required(login_url="login-register")
 def cart(request):
@@ -153,3 +156,42 @@ def addaddress(request):
     adr = request.GET['adr']
     Address.objects.create(address=adr,user=request.user)
     return HttpResponse("address added")
+
+def makeorder(request):
+
+    rid = request.GET['rid']
+    payid = request.GET['payid']
+    oid = request.GET['oid']
+    aid = request.GET['aid']
+    total = request.GET['total']
+   
+    address = Address.objects.get(pk=aid)
+
+    order = UserOrder.objects.create(
+        user=request.user,
+        address=address,
+        paymentid=payid,
+        total = int(total)/100,
+        receiptid=rid,
+        orderid=oid,
+        date = datetime.now()
+    )
+
+    cartdata =  Cart.objects.filter(user = request.user)
+    for cart in cartdata:
+        OrderDetails.objects.create(order=order,product=cart.product,qty=cart.qty,price=cart.product.price)
+        cart.delete()
+
+    
+    subject =  "Order Confimation"
+    message = "Your order is confirmed !!!"
+    context = {}
+    try:
+        send_mail(subject, message, settings.EMAIL_HOST_USER, [request.user.email])
+        context['result'] = 'Email sent successfully'
+    except Exception as e:
+        context['result'] = f'Error sending email: {e}'
+    
+
+
+    return HttpResponse("order successfully placed !!!")

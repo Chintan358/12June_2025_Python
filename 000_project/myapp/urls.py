@@ -26,7 +26,8 @@ urlpatterns = [
     path('changeqty',changeqty,name='changeqty'),
 
     path('payment',payment,name='payment'),
-    path("addaddress",addaddress,name="addaddress")
+    path("addaddress",addaddress,name="addaddress"),
+    path("makeorder",makeorder,name="makeorder")
 
 ]
 

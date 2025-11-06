@@ -41,14 +41,15 @@ class UserOrder(models.Model):
     receiptid = models.CharField(max_length=20)
     orderid = models.CharField(max_length=30)
     date = models.DateField()
-
+    
 class OrderDetails(models.Model):
-    order = models.ForeignKey(UserOrder,on_delete=models.CASCADE)
+    order = models.ForeignKey(UserOrder,on_delete=models.CASCADE,related_name="userorder")
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     qty = models.IntegerField()
     price = models.FloatField()
 
-    
+    def subtotal(self):
+        return self.price*self.qty
 
 
 

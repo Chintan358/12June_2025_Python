@@ -173,9 +173,15 @@
 
   document.getElementById('pay').onclick = function (e) {
 
+
+
     e.preventDefault();
+
+    var adr = $("input[name='adr']:checked").val();
+
+
     var amt = $("#amt").html()
-    alert(amt)
+
 
     $.get('payment', { amt }, function (rt) {
 
@@ -188,10 +194,18 @@
         "image": "https://example.com/your_logo",
         "order_id": rt.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         "handler": function (response) {
-          alert(rt.receipt)
-          alert(response.razorpay_payment_id);
-          alert(response.razorpay_order_id);
-          alert(response.razorpay_signature)
+          // alert(rt.receipt)
+          // alert(response.razorpay_payment_id);
+          // alert(response.razorpay_order_id);
+          // alert(response.razorpay_signature)
+
+          $.get('makeorder', { "rid": rt.receipt, "payid": response.razorpay_payment_id, "oid": response.razorpay_order_id, "aid": adr, total: rt.amount }, function (rt) {
+            alert(rt)
+            location.reload()
+
+          })
+
+
         },
         "prefill": {
           "name": "Gaurav Kumar",
