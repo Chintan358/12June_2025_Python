@@ -25,16 +25,47 @@ def test(request):
 
 class StudentView(APIView):
 
-    def get(request,self):
+    def get(self,request):
         allstudents = Student.objects.all()
         students =  StudentSerializer(allstudents,many=True)
         return Response({"students":students.data})
     
-    def post(request,self):
-        return HttpResponse("POST api calling")
+    def post(self,request):
+        data = StudentSerializer(data = request.data)
+        if not data.is_valid():
+            return Response({"Errors":data.errors,"message":"somethng went wrong"})
+        else:
+            data.save()
+            return Response({"Data":data.data,"message":"Data inserted successfully"})
     
-    def put(request,self):
-        return HttpResponse("PUT api calling")
+class StudentViewId(APIView):
+
+    def get(self,request,id):
+        student = Student.objects.get(pk=id)
+        ser = StudentSerializer(student)
+        return Response({"data":ser.data})
     
-    def delete(request,self):
-        return HttpResponse("DELETE api calling")
+    def put(self,request,id):
+        student = Student.objects.get(pk=id)
+       
+        ser= StudentSerializer(student,data=request.data)
+        if not ser.is_valid():
+            return Response({"Errors":ser.errors,"message":"Something went wrong"})
+        else:
+            ser.save()
+            return Response({"data":ser.data,"message":"data updated successfully"})
+        
+    def patch(self,request,id):
+        student = Student.objects.get(pk=id)
+       
+        ser= StudentSerializer(student,data=request.data,partial=True)
+        if not ser.is_valid():
+            return Response({"Errors":ser.errors,"message":"Something went wrong"})
+        else:
+            ser.save()
+            return Response({"data":ser.data,"message":"data updated successfully"})
+        
+    def delete(self,request,id):
+        student = Student.objects.get(pk=id)
+        student.delete()
+        return Response({"message":"Data deleted"})
