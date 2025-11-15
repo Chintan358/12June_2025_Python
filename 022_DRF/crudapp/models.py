@@ -6,4 +6,4 @@ class Employee(models.Model):
     email=models.CharField(max_length=50)
     salary = models.FloatField()
     age = models.IntegerField()
-    
+    image=models.ImageField(upload_to="profile_pic")
