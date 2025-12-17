@@ -27,7 +27,13 @@ urlpatterns = [
 
     path('payment',payment,name='payment'),
     path("addaddress",addaddress,name="addaddress"),
-    path("makeorder",makeorder,name="makeorder")
+    path("makeorder",makeorder,name="makeorder"),
+
+    path("forgotpassword",forgotpassword,name="forgotpassword"),
+    path("verifyotp",verifyotp,name="verifyotp"),
+    path("changepassword",changepassword,name="changepassword")
+
+
 
 ]
 

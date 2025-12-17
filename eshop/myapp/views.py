@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
+import random
 # Create your views here.
 
 def index(request):
@@ -83,6 +84,7 @@ def register(request):
         u.save()
         return render(request,"login-register.html",{"msg":"User Registered Successfully"})
     return render(request,"login-register.html")
+
 
 def user_login(request):
     if request.method == "POST":
@@ -203,7 +205,55 @@ def makeorder(request):
         context['result'] = 'Email sent successfully'
     except Exception as e:
         context['result'] = f'Error sending email: {e}'
-    
+
 
 
     return HttpResponse("order successfully placed !!!")
+
+
+
+def forgotpassword(request):
+    if request.method=='POST':
+        email = request.POST['email']
+        u = User.objects.filter(email=email)
+        
+        if len(u)<=0:
+             return render(request,"forgot.html",{"err":"User not found"})
+        else : 
+            r = random.randint(100,999)
+            request.session['otp']=r
+            request.session['email'] = email
+            try:
+                send_mail("Forgot Password Recovery", f"your otp is {r}", settings.EMAIL_HOST_USER, [email])
+                return render(request,"otpverify.html")
+            except Exception as e:
+                return render(request,"forgot.html",{"err":"Something went wrong"})
+                     
+    return render(request,"forgot.html")
+
+def verifyotp(request):
+    sotp = int(request.session.get('otp'))
+    email = request.session.get("email")
+    if request.method=='POST':
+        otp = int(request.POST['otp'])
+        
+        if otp==sotp:
+            return render(request,"newpassword.html")
+        else:
+            return render(request,"otpverify.html",{"err":"Invalid otp"})
+
+def changepassword(request):
+    email = request.session.get("email")
+    if request.method=='POST':
+        password = request.POST['pass']
+        cpassword = request.POST['cpass']
+        
+        if password!=cpassword:
+            return render(request,"newpassword.html",{"err":"Confirm password not match with password"})
+        else : 
+            u = User.objects.get(email=email)
+            print(u)
+            u.set_password(password)
+            u.save()
+
+            return render(request,"login-register.html")

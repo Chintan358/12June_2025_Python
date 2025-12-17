@@ -194,6 +194,7 @@
         "image": "https://example.com/your_logo",
         "order_id": rt.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         "handler": function (response) {
+          console.log(response)
           // alert(rt.receipt)
           // alert(response.razorpay_payment_id);
           // alert(response.razorpay_order_id);
@@ -201,7 +202,7 @@
 
           $.get('makeorder', { "rid": rt.receipt, "payid": response.razorpay_payment_id, "oid": response.razorpay_order_id, "aid": adr, total: rt.amount }, function (rt) {
             alert(rt)
-            location.reload()
+            //location.reload()
 
           })
 
